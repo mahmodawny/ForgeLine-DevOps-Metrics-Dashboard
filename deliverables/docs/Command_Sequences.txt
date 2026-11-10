@@ -1,0 +1,233 @@
+```text
+FORGELINE DEVOPS METRICS DASHBOARD
+Git Command Sequences
+
+==================================================
+
+1. CHECK REPOSITORY STATUS
+==================================================
+
+git status
+
+git branch
+
+git log --oneline
+
+These commands show the current working state,
+active branch, and commit history.
+
+
+==================================================
+
+2. CREATE AND SWITCH TO A FEATURE BRANCH
+==================================================
+
+git switch main
+
+git pull origin main
+
+git switch -c feature/metrics-documentation
+
+The feature branch isolates development changes
+from the stable main baseline.
+
+
+==================================================
+
+3. CONFIGURATION ITEM STATE TRANSITIONS
+==================================================
+
+# Check modified files
+git status
+
+# Stage selected changes
+git add filename
+
+# Review staged changes
+git diff --cached
+
+# Commit the Configuration Item
+git commit -m "Add metrics documentation"
+
+# Push the feature branch to GitHub
+git push -u origin feature/metrics-documentation
+
+These commands move a Configuration Item (CI)
+from the working copy to the staging area,
+then commit it to the local repository and
+push the feature branch to the remote repository.
+
+
+==================================================
+
+4. REVIEW LOCAL CHANGES
+==================================================
+
+# Show unstaged changes
+git diff
+
+# Show staged changes
+git diff --cached
+
+# Check for whitespace errors
+git diff --check
+
+# Review repository status
+git status
+
+Developers must review all changes and ensure
+that no unintended files or debugging statements
+are included before pushing.
+
+
+==================================================
+
+5. LOCAL LINTING
+==================================================
+
+npm run lint:check
+
+Run the configured local linter before submission.
+
+Resolve all linting warnings and errors before
+pushing changes or submitting a Pull Request.
+
+
+==================================================
+
+6. CREATE A PULL REQUEST
+==================================================
+
+git push -u origin feature/metrics-documentation
+
+On GitHub:
+
+1. Open the repository.
+2. Select Pull Requests.
+3. Click New Pull Request.
+4. Select main as the base branch.
+5. Select feature/metrics-documentation as the compare branch.
+6. Add a descriptive title and summary.
+7. Submit the Pull Request.
+8. Request peer review.
+9. Wait for required approvals and successful checks.
+10. Merge the Pull Request after approval.
+
+The main branch should be protected by repository
+rules requiring peer review before merging.
+
+
+==================================================
+
+7. FETCH UPSTREAM CHANGES
+==================================================
+
+# Check the current branch and working tree
+git status
+
+# Fetch the latest remote changes
+git fetch origin
+
+# Merge the latest main into the feature branch
+git merge origin/main
+
+If a merge conflict occurs, Git pauses the merge
+and identifies the conflicting files.
+
+
+==================================================
+
+8. MERGE CONFLICT RESOLUTION SCENARIO
+==================================================
+
+Scenario:
+
+The original main configuration contains:
+
+REFRESH_INTERVAL_SECONDS = 15
+DASHBOARD_NAME = "Metrics Dashboard"
+MAX_WIDGETS = 12
+
+The feature branch named
+feature/refresh-interval changes the refresh
+interval to 60 seconds and commits the change.
+
+Meanwhile, Dana changes the refresh interval
+to 30 seconds and renames the dashboard to
+"Delivery Metrics" on main.
+
+Commands:
+
+# Switch to the feature branch
+git switch feature/refresh-interval
+
+# Check the current branch and working tree
+git status
+
+# Fetch updates from GitHub
+git fetch origin
+
+# Merge main into the feature branch
+git merge origin/main
+
+Git reports a conflict in:
+config/metrics_config.py
+
+Read the conflict markers in the file:
+
+    <<<<<<< HEAD
+REFRESH_INTERVAL_SECONDS = 60
+    =======
+REFRESH_INTERVAL_SECONDS = 30
+    >>>>>>> origin/main
+
+DASHBOARD_NAME = "Delivery Metrics"
+MAX_WIDGETS = 12
+
+The conflict affects only the refresh interval.
+The dashboard name change from main is preserved.
+
+Edit config/metrics_config.py manually and
+resolve the conflict using the agreed value.
+
+Final file content:
+
+REFRESH_INTERVAL_SECONDS = 45
+DASHBOARD_NAME = "Delivery Metrics"
+MAX_WIDGETS = 12
+
+Confirm that the conflict markers have been removed:
+
+git diff --check
+
+# Check the merge status
+git status
+
+Stage the resolved file:
+
+git add config/metrics_config.py
+
+Review the staged resolution:
+
+git diff --cached
+
+Commit the merge:
+
+git commit -m "Resolve metrics configuration merge conflict"
+
+Verify the result:
+
+git status
+
+git log --oneline
+
+Push the updated feature branch:
+
+git push origin feature/refresh-interval
+
+
+==================================================
+
+END OF COMMAND SEQUENCES
+==================================================
+```
